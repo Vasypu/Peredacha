@@ -14,6 +14,16 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * @author Vasypu
+ * 	у класса GraphicalClient есть два метода creatrGraphicalClient и ShowError. Метод createGraphicalClient() создает окно
+ * 	с названием класса, сетку, заполняется его кпомпонентами(buuton, lable, text). При нажатии кнопки обзор, открывается
+ * 	диалоговое окно, в котором нужно выбрать файл для передачи серверу, после того как пользователь выберет файл заполнится 
+ * 	соответствующее поле(text), так же нужно ввести порт и ip. После ввода данных нажимается кнопка отправить, для передачи
+ * 	данных классу Sender, если происходит ошибка при передаче данных то вызывается метод showError, который создает MessageBox
+ * 	с содержание ошибки иначе создается MessageBox с надписью данные отпаравленны. 
+ *
+ */
 public class GraphicalClient {
 
 	//public static void main(String[] args) {
@@ -28,16 +38,20 @@ public class GraphicalClient {
     gridLayout.marginRight = 5;
     gridLayout.numColumns  = 2;        
     shell.setLayout(gridLayout);
+    
     Label file= new Label(shell,SWT.NONE);
-    file.setText("����:");    
+    file.setText("Файл:");    
     file.setLayoutData(new GridData(SWT.END,SWT.CENTER,false,false));
+    
 	Composite comprow1= new Composite(shell, SWT.BORDER);    
     comprow1.setLayout(new GridLayout(2, false));    
-    comprow1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));                  // ������ � comprow1, �� ��� �������� � ������ ������� ����
+    comprow1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+       
     Text textfile= new Text(comprow1, SWT.BORDER);    
-    textfile.setLayoutData(new GridData(SWT.FILL,SWT.CENTER, true, false));       
+    textfile.setLayoutData(new GridData(SWT.FILL,SWT.CENTER, true, false));
+    
     Button review= new Button(comprow1, SWT.PUSH);
-    review.setText("�����");        
+    review.setText("Обзор");        
     review.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
     review.addSelectionListener(new SelectionAdapter() {
 
@@ -47,28 +61,31 @@ public class GraphicalClient {
 		        
 		       if(fname != null) {
 		    	   textfile.setText(fname);		    		
-		    	}
-		    	else {				
-		    		dlg = new FileDialog(shell, SWT.CLOSE);		    		
-		    	}		       
+		    	}		    			       
 	    }
 	});
     
     Label ip= new Label(shell,SWT.NONE);
     ip.setText("IP:");    
     ip.setLayoutData(new GridData(SWT.END,SWT.CENTER,false,false));           
+    
     Composite comprow2= new Composite(shell, SWT.BORDER);    
     comprow2.setLayout(new GridLayout(3, false));
-    comprow2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));    
+    comprow2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false)); 
+    
     Text textip= new Text(comprow2, SWT.BORDER);
     textip.setLayoutData(new GridData(SWT.FILL,SWT.CENTER, true, false));
+    
     Label labport= new Label(comprow2,SWT.NONE);
-    labport.setText("����:");		
+    labport.setText("Порт:");		
+    
     Text textport= new Text(comprow2, SWT.BORDER);     
     textport.setLayoutData(new GridData(SWT.FILL,SWT.CENTER, true, false));    
+    
     Label emptylab= new Label(shell,SWT.NONE);    
+    
     Button send= new Button(shell, SWT.PUSH);
-    send.setText("���������");    
+    send.setText("Отправить");    
     send.setLayoutData(new GridData(SWT.END,SWT.END, false, true));   
     send.addSelectionListener(new SelectionAdapter() {
 
@@ -76,6 +93,7 @@ public class GraphicalClient {
 	    	String location = textfile.getText();	    	
 	    	String ipAddress = textip.getText();	    	
 	    	String serverPort = textport.getText();
+	    	
 	    	CheckForErrors check = new CheckForErrors();	
 	    	String message = check.checkForErrors(location, ipAddress, serverPort);
 	    	if(message != null) {
@@ -89,8 +107,8 @@ public class GraphicalClient {
 				}
 	    		else{
 	    			MessageBox messageBox = new MessageBox (shell);
-					messageBox.setText ("�����");
-					messageBox.setMessage ("������ ����������)");
+					messageBox.setText ("Готово");
+					messageBox.setMessage ("Данные отправлены)");
 					messageBox.open();
 	    		}
 	    	}	    	
@@ -109,7 +127,7 @@ public class GraphicalClient {
 	
 	static void showError(Shell shell, String message) {
 		MessageBox messageBox = new MessageBox (shell);
-		messageBox.setText ("������!");
+		messageBox.setText ("Ошибка!");
 		messageBox.setMessage (message);
 		messageBox.open();
 	}
