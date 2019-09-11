@@ -1,33 +1,30 @@
-package Peredacha;
+	package Peredacha;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+	import org.eclipse.swt.SWT;
+	import org.eclipse.swt.events.SelectionAdapter;
+	import org.eclipse.swt.events.SelectionEvent;
+	import org.eclipse.swt.layout.GridData;
+	import org.eclipse.swt.layout.GridLayout;
+	import org.eclipse.swt.widgets.Button;
+	import org.eclipse.swt.widgets.Composite;
+	import org.eclipse.swt.widgets.Display;
+	import org.eclipse.swt.widgets.FileDialog;
+	import org.eclipse.swt.widgets.Label;
+	import org.eclipse.swt.widgets.MessageBox;
+	import org.eclipse.swt.widgets.Shell;
+	import org.eclipse.swt.widgets.Text;
 
 /**
+ * Занимается отрисовкой графического клиента
+ * 
  * @author Vasypu
- * 	у класса GraphicalClient есть два метода creatrGraphicalClient и ShowError. Метод createGraphicalClient() создает окно
- * 	с названием класса, сетку, заполняется его кпомпонентами(buuton, lable, text). При нажатии кнопки обзор, открывается
- * 	диалоговое окно, в котором нужно выбрать файл для передачи серверу, после того как пользователь выберет файл заполнится 
- * 	соответствующее поле(text), так же нужно ввести порт и ip. После ввода данных нажимается кнопка отправить, для передачи
- * 	данных классу Sender, если происходит ошибка при передаче данных то вызывается метод showError, который создает MessageBox
- * 	с содержание ошибки иначе создается MessageBox с надписью данные отпаравленны. 
- *
  */
-public class GraphicalClient {
-
+public class GraphicalClient {	
+	 
 	//public static void main(String[] args) {
 		
+	/** Создает графический клиент, выбирает файл и передает данные классу CheckForErrors	 
+	 */
 	void createGraphicalClient() {
 		
 	Display display = new Display ();
@@ -88,8 +85,12 @@ public class GraphicalClient {
     send.setText("Отправить");    
     send.setLayoutData(new GridData(SWT.END,SWT.END, false, true));   
     send.addSelectionListener(new SelectionAdapter() {
-
-	    public void widgetSelected (SelectionEvent e){		
+    	
+	    /** Отправляет данные классу CheckForErrors
+	     *
+	     */
+	    public void widgetSelected (SelectionEvent e){		    	
+	    	
 	    	String location = textfile.getText();	    	
 	    	String ipAddress = textip.getText();	    	
 	    	String serverPort = textport.getText();
@@ -125,7 +126,12 @@ public class GraphicalClient {
     display.dispose ();
 	}
 	
+	/** Выводит сообщение об ошибке
+	 * @param shell окно для ошибки
+	 * @param message сообщение с содержимым ошибки
+	 */
 	static void showError(Shell shell, String message) {
+		
 		MessageBox messageBox = new MessageBox (shell);
 		messageBox.setText ("Ошибка!");
 		messageBox.setMessage (message);

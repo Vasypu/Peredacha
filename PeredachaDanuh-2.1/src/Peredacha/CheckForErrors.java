@@ -1,14 +1,18 @@
 package Peredacha;
 
 /**
+ * Занимамется проверкой переданных данных
+ * 
  * @author Vasypu
- *	класс CheckForErrors проверяет на ошибки полученные данные, у него есть метод checkForErrors, который принимает 
- *	три аргумента и возвращает переменную String с содержанием ошибки, если все аргументы были проверенны и ошибки не выявлены,
- *	то метод возврщает ничего.
- *	
  */
 public class CheckForErrors {	
 	
+	/** Проверяет данные
+	 * @param location путь к файлу
+	 * @param ipAddress адрес сервера
+	 * @param port порт сервера
+	 * @return сообщение об ошибке или null, если они верны
+	 */
 	String checkForErrors(String location, String ipAddress, String port){		
 		
 		if(location.isEmpty()) {				
