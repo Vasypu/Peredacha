@@ -6,17 +6,19 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 /**
- * @author Vasypu
+ * Занимается отправкой данных по сети
  * 
- * у класса Sender есть метод send с возврщаемым типом String, этот метод принемает 3 аргумента,
- * в конструкции try пытается считать файл и установить соединение с
- * сервером по переданным аргументам методу send, если соединение с сервером проходит успешно и удалось найти 
- * указаный файл, то в теле метода создается буффер, если нет, то возврщается строку с содержанием об ошибке, 
- * который будет заполнятся байтами из считанного файла и отправлятся серверу буфферами размером в 55 байт.
+ * @author Vasypu
  */
 public class Sender {
 	
-	  String send (String location, String ipAddress, int port) {
+	/** Устанавливает TCP-соединение с сервером и отправляет файл
+	 * @param location путь к файлу
+	 * @param ipAddress адрес сервера
+	 * @param port порт сервера
+	 * @return сообщение об ошибке, либо null, если передача успешно завершена
+	 */
+	String send (String location, String ipAddress, int port) {
 		try (FileInputStream fin = new FileInputStream(location); Socket socket = new Socket(ipAddress, port)) {
 		
 			byte [] buffer = new byte[55];
@@ -30,4 +32,5 @@ public class Sender {
 		}
 		return null;
 	}
+	
 }
